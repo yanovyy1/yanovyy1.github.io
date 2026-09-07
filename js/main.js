@@ -252,7 +252,11 @@
 
   /* ---------- Clicks: list row -> jump to slide (or open modal on mobile
      where the track is hidden); preview frame -> open modal ---------- */
-  const isMobileLayout = () => window.matchMedia('(max-width: 720px)').matches;
+  /* Kept in sync with the CSS breakpoint (see the comment above it in
+     style.css) - a phone in landscape is wide enough to clear a
+     width-only check, which used to leave it on the desktop hover-driven
+     preview path where autoplay never got triggered by touch. */
+  const isMobileLayout = () => window.matchMedia('(max-width: 720px), (max-height: 480px) and (pointer: coarse)').matches;
 
   /* ---------- Autoplay row thumbnails on mobile ----------
      .work-track (and its autoplaying videos) is display:none on mobile -

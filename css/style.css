@@ -179,9 +179,10 @@ button { background: none; border: 0; cursor: pointer; }
      Floor case: below roughly 300-350px of real viewport height the
      5-row list alone is taller than the wordmark can shrink to clear (a
      fixed row count doesn't scale down the way font-size does) - a
-     genuinely short window (e.g. a phone in landscape, wide enough to
-     stay past the 720px mobile breakpoint) can still see slight overlap
-     there, though the one-line change pushed that floor much lower than
+     genuinely short window (e.g. a short desktop browser window with a
+     mouse, which the touch+height mobile breakpoint below deliberately
+     doesn't catch) can still see slight overlap there, though the
+     one-line change pushed that floor much lower than
      the two-line version's ~500-550px. */
   font-size: clamp(40px, min(calc(var(--content-w) * 0.05), 22vh), 125px);
   line-height: 0.9;
@@ -697,8 +698,17 @@ button { background: none; border: 0; cursor: pointer; }
   object-fit: contain;
 }
 
-/* ---------- Mobile: single scrolling column ---------- */
-@media (max-width: 720px) {
+/* ---------- Mobile: single scrolling column ----------
+   Width alone can't identify "phone" - a phone rotated to landscape is
+   wide enough (667-926px) to blow past a width-only breakpoint on most
+   modern devices, which used to hand it the desktop layout (fixed-height
+   sidebar columns meant for a tall viewport + hover-driven video preview
+   logic meant for a mouse) squeezed into a ~350-430px-tall screen. The
+   (max-height: 480px) and (pointer: coarse) clause catches that case on
+   height instead of width, and pointer:coarse keeps it from also firing
+   on a short desktop browser window (mouse => pointer:fine, unaffected)
+   or a tablet in landscape (height comfortably over 480px). */
+@media (max-width: 720px), (max-height: 480px) and (pointer: coarse) {
   /* --content-w (see :root) derives from --page-pad-x, so it has to track
      .page's actual padding here too, not just the desktop clamp(). */
   :root { --page-pad-x: 16px; }
