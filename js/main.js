@@ -165,6 +165,24 @@
 
   const posterFor = (file) => `assets/vids/posters/${file.replace(/\.mp4$/, '.jpg')}`;
 
+  /* Posters are extracted ~15% into each clip, not at frame 0 (see the
+     commit that added them) - it dodges black/blank opening frames on this
+     footage. Seeking here to that same point before playing means the
+     poster-to-video crossfade hands off between two frames that actually
+     match, instead of jumping from the ~15% frame to frame 0 - which is
+     what read as a flicker no matter how the crossfade itself was timed. */
+  const PREVIEW_START_FRACTION = 0.15;
+  const startPreviewVideo = (video) => {
+    const seekAndPlay = () => {
+      if (video.duration && isFinite(video.duration)) {
+        video.currentTime = video.duration * PREVIEW_START_FRACTION;
+      }
+      video.play().catch(() => {});
+    };
+    if (video.readyState >= 1) seekAndPlay();
+    else video.addEventListener('loadedmetadata', seekAndPlay, { once: true });
+  };
+
   ORDER.forEach((key, i) => {
     const p = PROJECTS[key];
     const firstMedia = (p.media && p.media[0]) || null;
@@ -256,8 +274,7 @@
                 video.src = `assets/vids/${video.dataset.file}`;
                 video.load();
               }
-              video.currentTime = 0;
-              video.play().catch(() => {});
+              startPreviewVideo(video);
             }
           } else if (video) {
             video.pause();
@@ -298,7 +315,7 @@
               video.src = `assets/vids/${video.dataset.file}`;
               video.load();
             }
-            video.play().catch(() => {});
+            startPreviewVideo(video);
           } else {
             video.pause();
             thumb.classList.remove('is-playing');
