@@ -106,6 +106,36 @@ button { background: none; border: 0; cursor: pointer; }
   transform: translateY(0);
 }
 
+/* The wordmark is the page's one signature entrance moment - a left-to-right
+   clip-path wipe (like a title card in an edit) instead of the plain
+   opacity+rise every other .fade-in element gets, so it doesn't compete with
+   itself. Two classes (vs. plain .fade-in's one) beats the base rule's
+   opacity/transform/transition on specificity alone, regardless of source
+   order, so this doesn't depend on rule position in the file. */
+.wordmark-reveal.fade-in {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.85s var(--ease);
+}
+/* The open state overshoots past the box's own right edge (negative inset)
+   rather than stopping exactly at 0 - Safari's fit-content width on this bold
+   letter-spaced heading leaves the last glyph's antialiased edge a hair past
+   the box, so an exact inset(0 0 0 0) clips it off (invisible in Chrome,
+   visible in Safari). The overshoot is small enough it can't reveal anything
+   beyond the text itself, since nothing else sits in the h1's box. */
+.wordmark-reveal.fade-in.is-visible {
+  clip-path: inset(0 -0.2em 0 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in,
+  .wordmark-reveal.fade-in {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}
+
 /* ---------- Page ----------
    Deliberately NOT a container-type:inline-size query container (it was,
    briefly - see git history if you're wondering). container-type applies
