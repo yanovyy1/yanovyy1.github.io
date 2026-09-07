@@ -184,6 +184,19 @@
       </span>`;
     projList.appendChild(row);
 
+    /* Reveal on the video's own 'playing' event, not on the play() promise -
+       the promise resolves as soon as playback is requested, which on a
+       fresh (preload="none") video is well before the first real frame is
+       decoded, so cross-fading the video in right then flashed a blank/black
+       frame for an instant. 'playing' only fires once a frame is actually
+       about to render, so there's nothing left uncovered underneath. */
+    const rowVideo = row.querySelector('.proj-row-video');
+    if (rowVideo) {
+      rowVideo.addEventListener('playing', () => {
+        row.querySelector('.proj-row-thumb')?.classList.add('is-playing');
+      });
+    }
+
     const slide = document.createElement('section');
     slide.className = 'work-slide';
     slide.dataset.project = key;
@@ -200,6 +213,13 @@
       </button>
       <span class="preview-role">${p.role}</span>`;
     workTrack.appendChild(slide);
+
+    const slideVideo = slide.querySelector('.preview-video');
+    if (slideVideo) {
+      slideVideo.addEventListener('playing', () => {
+        slide.querySelector('.preview-frame')?.classList.add('is-playing');
+      });
+    }
   });
 
   const projRows = Array.from(document.querySelectorAll('.proj-row'));
@@ -237,7 +257,7 @@
                 video.load();
               }
               video.currentTime = 0;
-              video.play().then(() => frame.classList.add('is-playing')).catch(() => {});
+              video.play().catch(() => {});
             }
           } else if (video) {
             video.pause();
@@ -278,7 +298,7 @@
               video.src = `assets/vids/${video.dataset.file}`;
               video.load();
             }
-            video.play().then(() => thumb.classList.add('is-playing')).catch(() => {});
+            video.play().catch(() => {});
           } else {
             video.pause();
             thumb.classList.remove('is-playing');
