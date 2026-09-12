@@ -26,6 +26,7 @@
         'Helped grow the app to 1M+ users',
       ],
       media: ['glam_1.mp4', 'glam_2.mp4', 'glam_3.mp4', 'glam_4.mp4', 'glam_5.mp4', 'glam_6.mp4', 'glam_7.mp4', 'glam_8.mp4', 'glam_9.mp4'],
+      note: 'Most creatives are under NDA — only short excerpts shown.',
       mediaCount: 9,
       mediaColumns: 3,
     },
@@ -42,6 +43,7 @@
         'Steady output of 3–6 ad packs a week, zero missed deadlines',
       ],
       media: ['prequel_01.mp4', 'prequel_02.mp4', 'prequel_03.mp4', 'prequel_04.mp4', 'prequel_05.mp4', 'prequel_06.mp4'],
+      note: 'Most creatives are under NDA — only short excerpts shown.',
       mediaCount: 9,
       mediaPlaceholder: 'NDA',
       mediaColumns: 3,
@@ -368,6 +370,12 @@
       descList.appendChild(li);
     });
     modalDesc.appendChild(descList);
+    if (p.note) {
+      const note = document.createElement('p');
+      note.className = 'modal-desc-note';
+      note.textContent = p.note;
+      modalDesc.appendChild(note);
+    }
     modalMedia.innerHTML = '';
     modalMedia.classList.toggle('modal-media--fixed3', p.mediaColumns === 3);
     const media = p.media || [];
