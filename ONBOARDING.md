@@ -264,9 +264,9 @@ edge-swipe жеста iOS — сейчас настроена под то, чт�
 
 | Проект (ключ в `PROJECTS`) | Роль | Период | Статус |
 |---|---|---|---|
-| `freelance` | Motion Design | 2018 — Present | 2 реальных видео (`freelance_5`, `freelance_4`) + 7 плейсхолдеров |
+| `freelance` | Motion Design | 2018 — Present | 5 реальных видео (`freelance_5`, `freelance_4`, `freelance_1`, `freelance_2`, `freelance_3`) + 4 плейсхолдера |
 | `prequel` | Marketing Motion Designer | 2021–2023 | 6 реальных видео + 3 NDA-заглушки |
-| `glam` | Lead Motion Designer / AI Artist | 2023–2024 | 2 реальных видео + 7 плейсхолдеров |
+| `glam` | Lead Motion Designer / AI Artist | 2023–2024 | 9 из 9 реальных видео |
 | `other` (label «AI Generations») | Generative AI | Various projects | 8 реальных видео + 1 плейсхолдер |
 | `denim` (label «495 Denim») | Content Creator | без дат | 9 из 9 реальных видео |
 
