@@ -662,7 +662,7 @@ button { background: none; border: 0; cursor: pointer; }
   opacity: 0.55;
 }
 .modal-desc-note {
-  margin: -14px 0 28px;
+  margin: 14px 0 0;
   font-size: 12px;
   font-style: italic;
   color: var(--fg-dim);
